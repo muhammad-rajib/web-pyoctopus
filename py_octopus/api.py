@@ -20,6 +20,8 @@ class OctopusAPI:
 
     def route(self, path):
         def wrapper(handler):
+            if path in self.routes:
+                raise AssertionError("Duplicate Route - Such route already exists.")
             self.routes[path] = handler
             return handler
 
