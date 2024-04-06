@@ -6,6 +6,10 @@ from api import OctopusAPI
 app = OctopusAPI()
 
 
+"""
+# Function Based Handlers
+"""
+
 @app.route("/home")
 def home(request, response):
     response.text = f"Py-Octopus: The Fastest Web Application Framework"
@@ -25,3 +29,15 @@ def about(request, response):
 def add(request, response, val_1, val_2):
     total = int(val_1) + int(val_2)
     response.text = f"{val_1} + {val_2} = {total}"
+
+
+"""
+# Class Based Handlers
+"""
+@app.route("/book")
+class BooksResource:
+    def get(self, req, resp):
+        resp.text = "Endpoint to get Book Page"
+
+    def post(self, req, resp):
+        resp.text = "Endpoint to create a book"
