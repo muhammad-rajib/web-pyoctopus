@@ -19,9 +19,9 @@ class OctopusAPI:
         return response(environ, start_response)
 
     def route(self, path):
+        assert path not in self.routes, "Duplicate Route - Such route already exists."
+        
         def wrapper(handler):
-            if path in self.routes:
-                raise AssertionError("Duplicate Route - Such route already exists.")
             self.routes[path] = handler
             return handler
 
