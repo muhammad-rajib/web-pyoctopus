@@ -3,6 +3,8 @@ import inspect
 
 from webob import Request, Response
 from parse import parse
+from requests import Session as RequestSession
+from wsgiadapter import WSGIAdapter as RequestWSGIAdapter
 
 
 class OctopusAPI:
@@ -58,3 +60,8 @@ class OctopusAPI:
             self.default_response(response)
         
         return response
+
+    def test_session(self, base_url='http://testserver'):
+        session = RequestSession()
+        session.mount(prefix=base_url, adapter=RequestWSGIAdapter(self))
+        return session
