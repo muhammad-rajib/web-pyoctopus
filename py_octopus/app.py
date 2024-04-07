@@ -48,3 +48,12 @@ def sample(req, resp):
     resp.text = "Sample django type route"
 
 app.add_route("/sample", sample)
+
+
+# templates handler
+@app.route("/template")
+def template_handler(req, resp):
+    resp.body = app.template(
+        "index.html", 
+        context={"title": "Awesome Framework", "name": "Py-Octopus"}
+        )
