@@ -1,0 +1,2 @@
+[run]
+omit = venv/*, test_py_octopus.py, conftest.py, app.py
