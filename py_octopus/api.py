@@ -7,13 +7,14 @@ from parse import parse
 from requests import Session as RequestSession
 from wsgiadapter import WSGIAdapter as RequestWSGIAdapter
 from jinja2 import Environment, FileSystemLoader
+from whitenoise import WhiteNoise
 
 
 class OctopusAPI:
     """
     # Entry Point of Application
     """
-    def __init__(self, templates_dir="templates"):
+    def __init__(self, templates_dir="templates", static_dir="static"):
         self.routes = {}
 
         # load templates dir
@@ -23,7 +24,12 @@ class OctopusAPI:
 
         self.exception_handler = None
 
+        self.whitenoise = WhiteNoise(self.wsgi_app, root=static_dir)
+
     def __call__(self, environ, start_response):
+        return self.whitenoise(environ, start_response)
+
+    def wsgi_app(self, environ, start_response):
         request = Request(environ)
 
         response = self.handle_request(request)
