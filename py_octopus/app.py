@@ -57,3 +57,14 @@ def template_handler(req, resp):
         "index.html", 
         context={"title": "Awesome Framework", "name": "Py-Octopus"}
         )
+
+# exception
+def custom_exception_handler(req, resp, exception_cls):
+    resp.text = str(exception_cls)
+
+app.add_exception_handler(custom_exception_handler)
+
+
+@app.route("/exception")
+def exception_throwing_handler(request, response):
+    raise AssertionError("This handler should not be used")

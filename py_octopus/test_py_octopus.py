@@ -95,7 +95,7 @@ def test_alternative_route(api, client):
 def test_template(api, client):
     @api.route("/html")
     def html_handler(req, resp):
-        resp.body = api.template("index.html", context={"title": "Some Title", "name": "Some Name"}).encode()
+        resp.body = api.template("index.html", context={"title": "Some Title", "name": "Some Name"})
 
     
     response = client.get("http://testserver/html")
@@ -103,3 +103,18 @@ def test_template(api, client):
     assert "text/html" in response.headers["Content-Type"]
     assert "Some Title" in response.text
     assert "Some Name" in response.text
+
+
+def test_custom_exception_handler(api, client):
+    def on_exception(req, resp, exc):
+        resp.text = "AttributeErrorHappened"
+
+    api.add_exception_handler(on_exception)
+
+    @api.route("/")
+    def index(req, resp):
+        raise AttributeError
+
+    response = client.get("http://testserver/")
+
+    assert response.text == "AttributeErrorHappened"
