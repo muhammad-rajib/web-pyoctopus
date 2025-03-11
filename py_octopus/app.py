@@ -10,6 +10,7 @@ app = OctopusAPI()
 # Function Based Handlers
 """
 
+
 @app.route("/home")
 def home(request, response):
     response.text = f"Py-Octopus: The Fastest Web Application Framework"
@@ -34,6 +35,8 @@ def add(request, response, val_1, val_2):
 """
 # Class Based Handlers
 """
+
+
 @app.route("/book")
 class BooksResource:
     def get(self, req, resp):
@@ -47,20 +50,22 @@ class BooksResource:
 def sample(req, resp):
     resp.text = "Sample django type route"
 
+
 app.add_route("/sample", sample)
 
 
-# templates handler
+# template handler
 @app.route("/template")
 def template_handler(req, resp):
     resp.body = app.template(
-        "index.html", 
-        context={"title": "Awesome Framework", "name": "Py-Octopus"}
-        )
+        "index.html", context={"title": "Awesome Framework", "name": "Py-Octopus"}
+    ).encode()
+
 
 # exception
 def custom_exception_handler(req, resp, exception_cls):
     resp.text = str(exception_cls)
+
 
 app.add_exception_handler(custom_exception_handler)
 
@@ -73,11 +78,13 @@ def exception_throwing_handler(request, response):
 # custom middleware
 from middleware import Middleware
 
+
 class SimpleCustomMiddleware(Middleware):
     def process_request(self, req):
         print("Processing request", req.url)
 
     def process_response(self, req, res):
         print("Processing response", req.url)
+
 
 app.add_middleware(SimpleCustomMiddleware)
