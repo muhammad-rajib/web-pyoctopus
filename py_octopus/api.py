@@ -1,4 +1,4 @@
-# api.py 
+# api.py
 import os
 import inspect
 
@@ -16,6 +16,7 @@ class OctopusAPI:
     """
     # Entry Point of Application
     """
+
     def __init__(self, templates_dir="templates", static_dir="static"):
         self.routes = {}
 
@@ -34,9 +35,9 @@ class OctopusAPI:
         path_info = environ["PATH_INFO"]
 
         if path_info.startswith("/static"):
-            environ["PATH_INFO"] = path_info[len("/static"):]
+            environ["PATH_INFO"] = path_info[len("/static") :]
             return self.whitenoise(environ, start_response)
-    
+
         return self.middleware(environ, start_response)
 
     def wsgi_app(self, environ, start_response):
@@ -51,7 +52,7 @@ class OctopusAPI:
 
         self.routes[path] = handler
 
-    def route(self, path):        
+    def route(self, path):
         def wrapper(handler):
             self.add_route(path, handler)
             return handler
@@ -67,7 +68,7 @@ class OctopusAPI:
             parse_result = parse(path, request_path)
             if parse_result is not None:
                 return handler, parse_result.named
-        
+
         return None, None
 
     def handle_request(self, request):
@@ -81,22 +82,22 @@ class OctopusAPI:
                     handler = getattr(handler(), request.method.lower(), None)
                     if handler is None:
                         raise AttributeError("Method not allowed", request.method)
-                    
+
                     handler(request, response, **kwargs)
                 else:
                     handler(request, response, **kwargs)
             else:
                 self.default_response(response)
-        
+
         except Exception as e:
             if self.exception_handler is None:
                 raise e
             else:
                 self.exception_handler(request, response, e)
-        
+
         return response
 
-    def test_session(self, base_url='http://testserver'):
+    def test_session(self, base_url="http://testserver"):
         session = RequestSession()
         session.mount(prefix=base_url, adapter=RequestWSGIAdapter(self))
         return session
@@ -104,11 +105,11 @@ class OctopusAPI:
     def template(self, template_name, context=None):
         if context is None:
             context = {}
-        
+
         return self.templates_env.get_template(template_name).render(**context).encode()
 
     def add_exception_handler(self, exception_handler):
         self.exception_handler = exception_handler
-    
+
     def add_middleware(self, middleare_cls):
         self.middleware.add(middleare_cls)
