@@ -23,7 +23,9 @@ jobs:
           pip install pytest
 
       - name: Run Tests
-        run: pytest -v
+        run: |
+          cd py_octopus/
+          pytest -v
 
   deploy:
     name: Deploy to PyPI
