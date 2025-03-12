@@ -1,3 +1,4 @@
+README.md
 setup.py
 pyoctopus/__init__.py
 pyoctopus/api.py
