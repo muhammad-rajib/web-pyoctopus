@@ -12,16 +12,17 @@ DESCRIPTION = "Web-PyOctopus is a lightweight Python web framework designed for 
 EMAIL = "muhammadrajib199701@gmail.com"
 AUTHOR = "Muhammad Rajib"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "1.0.2"
+VERSION = "1.0.5"
 
 # Which packages are required for this module to be executed?
 REQUIRED = [
-    "Jinja2==2.10.3",
+    "Jinja2==3.1.6",
     "parse==1.12.1",
     "requests==2.22.0",
     "requests-wsgi-adapter==0.4.1",
     "WebOb==1.8.5",
     "whitenoise==4.1.4",
+    "MarkupSafe==2.0.1",
 ]
 
 # The rest you shouldn't have to touch too much :)
