@@ -1,10 +1,36 @@
-__pycache__
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Environments
-.env
-.venv
-env/
+# Virtual environment
+.env/
 venv/
 ENV/
 env.bak/
-venv.bak/
+*.venv
+
+# Distribution / packaging
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Pytest cache
+.pytest_cache/
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# VS Code settings
+.vscode/
+
+# MacOS / Linux system files
+.DS_Store
+*.swp
+*.swo
+
+# Python pip environment
+pip-wheel-metadata/

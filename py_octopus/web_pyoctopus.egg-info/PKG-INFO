@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: web-pyoctopus
-Version: 0.0.3
+Version: 1.0.1
 Summary: Web-PyOctopus is a lightweight Python web framework designed for learning and experimentation, inspired by modern frameworks like Django and FastAPI.
 Home-page: UNKNOWN
 Author: Muhammad Rajib
