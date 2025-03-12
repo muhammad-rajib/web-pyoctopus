@@ -1,6 +1,6 @@
 import pytest
 
-from api import OctopusAPI
+from pyoctopus.api import OctopusAPI
 
 
 @pytest.fixture

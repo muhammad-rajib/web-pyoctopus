@@ -1,6 +1,6 @@
 # app.py
 
-from api import OctopusAPI
+from pyoctopus.api import OctopusAPI
 
 
 app = OctopusAPI()
