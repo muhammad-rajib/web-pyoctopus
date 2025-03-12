@@ -26,9 +26,13 @@ jobs:
         run: pytest -v
 
   deploy:
+    name: Deploy to PyPI
+    needs: [build]
     runs-on: ubuntu-latest
+
     steps:
       - name: pulling git repo
         uses: actions/checkout@v2
+      
       - name: Start Publishing on PYPI
         run: echo "Publishing WebPyOctorpus on PYPI !!"
