@@ -8,11 +8,11 @@ from setuptools import find_packages, setup
 
 # Package meta-data.
 NAME = "web-pyoctopus"
-DESCRIPTION = "PyOctopus Python Web Framework built for learning purposes."
+DESCRIPTION = "Web-PyOctopus is a lightweight Python web framework designed for learning and experimentation, inspired by modern frameworks like Django and FastAPI."
 EMAIL = "muhammadrajib199701@gmail.com"
 AUTHOR = "Muhammad Rajib"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 
 # Which packages are required for this module to be executed?
 REQUIRED = [
