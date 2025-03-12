@@ -12,41 +12,58 @@ Requires-Python: >=3.6.0
 Description-Content-Type: text/markdown
 
 
-# Web-PyOctopus: Python Web Framework built for learning purposes
+# Web-PyOctopus: A Lightweight Python Web Framework
 
-![purpose](https://img.shields.io/badge/purpose-learning-green.svg)
+![Purpose](https://img.shields.io/badge/purpose-learning-green.svg)
 ![PyPI](https://img.shields.io/pypi/v/web-pyoctopus.svg)
 
-WebPyOctopus is a Python web framework built for learning purposes.
+**Web-PyOctopus** is a lightweight and easy-to-use Python web framework built for learning purposes. It is a **WSGI framework**, meaning it can be used with any WSGI application server such as **Gunicorn**.
 
-It's a WSGI framework and can be used with any WSGI application server such as Gunicorn.
+### 🔗 [View on PyPI](https://pypi.org/project/web-pyoctopus/)
 
-## Installation
+---
 
-```shell
+## 🚀 Installation
+
+Install Web-PyOctopus using **pip**:
+
+```sh
 pip install web-pyoctopus
 ```
 
-## How to use it
+---
 
-### Basic usage:
+## 📌 Basic Usage
+
+Create a simple **Web-PyOctopus** app:
 
 ```python
 from pyoctopus.api import OctopusAPI
 
 app = OctopusAPI()
 
-
 @app.route("/home")
 def home(request, response):
     response.text = "Hello from the HOME page"
 
-
 @app.route("/hello/{name}")
 def greeting(request, response, name):
-    response.text = f"Hello, {name}"
+    response.text = f"Hello, {name}!"
+```
 
+Run it with a WSGI server like **Gunicorn**:
 
+```sh
+gunicorn app:app
+```
+
+---
+
+## 📚 Routing & Class-Based Views
+
+Define class-based views for better organization:
+
+```python
 @app.route("/book")
 class BooksResource:
     def get(self, req, resp):
@@ -54,108 +71,105 @@ class BooksResource:
 
     def post(self, req, resp):
         resp.text = "Endpoint to create a book"
+```
 
+---
 
+## 🎨 Template Rendering
+
+Use templates for dynamic content:
+
+```python
 @app.route("/template")
 def template_handler(req, resp):
     resp.body = app.template(
-        "index.html", context={"name": "Web-PyOctopus", "title": "Best Framework"}).encode()
+        "index.html", context={"name": "Web-PyOctopus", "title": "Best Framework"}
+    ).encode()
 ```
 
-### Unit Tests
-
-The recommended way of writing unit tests is with [pytest](https://docs.pytest.org/en/latest/). There are two built in fixtures
-that you may want to use when writing unit tests with Web-PyOctopus. The first one is `app` which is an instance of the main `API` class:
+Change the default template directory:
 
 ```python
-def test_route_overlap_throws_exception(app):
-    @app.route("/")
-    def home(req, resp):
-        resp.text = "Welcome Home."
-
-    with pytest.raises(AssertionError):
-        @app.route("/")
-        def home2(req, resp):
-            resp.text = "Welcome Home2."
+app = OctopusAPI(templates_dir="custom_templates")
 ```
 
-The other one is `client` that you can use to send HTTP requests to your handlers. It is based on the famous [requests](https://requests.readthedocs.io/) and it should feel very familiar:
-
-```python
-def test_parameterized_route(app, client):
-    @app.route("/{name}")
-    def hello(req, resp, name):
-        resp.text = f"hey {name}"
-
-    assert client.get("http://testserver/matthew").text == "hey matthew"
-```
-
-## Templates
-
-The default folder for templates is `templates`. You can change it when initializing the main `API()` class:
-
-```python
-app = API(templates_dir="templates_dir_name")
-```
-
-Then you can use HTML files in that folder like so in a handler:
-
-```python
-@app.route("/show/template")
-def handler_with_template(req, resp):
-    resp.html = app.template(
-        "example.html", context={"title": "Awesome Framework", "body": "welcome to the future!"})
-```
-
-## Static Files
-
-Just like templates, the default folder for static files is `static` and you can override it:
-
-```python
-app = API(static_dir="static_dir_name")
-```
-
-Then you can use the files inside this folder in HTML files:
+Example `index.html`:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>{{title}}</title>
-
-    <link href="/static/main.css" rel="stylesheet" type="text/css" />
+    <title>{{ title }}</title>
   </head>
-
   <body>
-    <h1>{{body}}</h1>
-    <p>This is a paragraph</p>
+    <h1>Welcome to {{ name }}</h1>
   </body>
 </html>
 ```
 
-### Middleware
+---
 
-You can create custom middleware classes by inheriting from the `web-pyoctopus.middleware.Middleware` class and overriding its two methods
-that are called before and after each request:
+## 📂 Static Files
+
+By default, static files are served from the `static` directory. You can change it:
 
 ```python
-from pyoctopus.api import OctopusAPI
+app = OctopusAPI(static_dir="assets")
+```
+
+Use them in HTML:
+
+```html
+<link href="/static/styles.css" rel="stylesheet" />
+```
+
+---
+
+## 🛠 Middleware Support
+
+Create custom middleware by inheriting from `Middleware`:
+
+```python
 from pyoctopus.middleware import Middleware
 
-
-app = OctopusAPI()
-
-
-class SimpleCustomMiddleware(Middleware):
+class SimpleLoggerMiddleware(Middleware):
     def process_request(self, req):
-        print("Before dispatch", req.url)
+        print("Request received:", req.url)
 
     def process_response(self, req, res):
-        print("After dispatch", req.url)
+        print("Response sent:", req.url)
 
-
-app.add_middleware(SimpleCustomMiddleware)
+app.add_middleware(SimpleLoggerMiddleware)
 ```
+
+---
+
+## 🧪 Unit Testing
+
+Use **pytest** for testing. Fixtures `app` and `client` help in writing tests:
+
+```python
+def test_home_route(client):
+    response = client.get("/home")
+    assert response.text == "Hello from the HOME page"
+```
+
+Parameterized route testing:
+
+```python
+def test_dynamic_route(client):
+    response = client.get("/hello/Alice")
+    assert response.text == "Hello, Alice!"
+```
+
+---
+
+## 📜 License
+
+Web-PyOctopus is an open-source project for educational purposes.
+
+---
+
+### 🚀 Happy Coding with Web-PyOctopus! 🎉
 
 
