@@ -12,7 +12,7 @@ DESCRIPTION = "PyOctopus Python Web Framework built for learning purposes."
 EMAIL = "muhammadrajib199701@gmail.com"
 AUTHOR = "Muhammad Rajib"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 # Which packages are required for this module to be executed?
 REQUIRED = [
