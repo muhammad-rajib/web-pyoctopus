@@ -60,7 +60,7 @@ pip install gunicorn
 Create a file named `app.py` in your project directory and add the following code:
 
 ```python
-from pyoctopus.api import OctopusAPI
+from web_pyoctopus.api import OctopusAPI
 
 # Create an instance of OctopusAPI
 app = OctopusAPI()
@@ -182,7 +182,7 @@ Use them in HTML:
 Create custom middleware by inheriting from `Middleware`:
 
 ```python
-from pyoctopus.middleware import Middleware
+from web_pyoctopus.middleware import Middleware
 
 class SimpleLoggerMiddleware(Middleware):
     def process_request(self, req):

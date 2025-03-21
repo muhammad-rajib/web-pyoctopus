@@ -3,7 +3,7 @@
 """
 
 import pytest
-from web_pyoctopus.api import OctopusAPI
+from pyoctopus.api import OctopusAPI
 
 
 # test adding route
@@ -171,7 +171,7 @@ def test_assets_are_served(tmpdir_factory):
 # Test Code to Support Middleware Feature
 
 """
-from web_pyoctopus.middleware import Middleware
+from pyoctopus.middleware import Middleware
 
 
 def test_middleware_methods_are_called(api, client):
