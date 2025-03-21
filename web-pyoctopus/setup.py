@@ -12,7 +12,7 @@ DESCRIPTION = "Web-PyOctopus is a lightweight Python web framework designed for 
 EMAIL = "muhammadrajib199701@gmail.com"
 AUTHOR = "Muhammad Rajib"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "1.0.6"
+VERSION = "1.0.7"
 
 # Which packages are required for this module to be executed?
 REQUIRED = [
